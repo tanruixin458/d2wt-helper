@@ -1,0 +1,57 @@
+{
+	"name": "d2wt-helper",
+	"displayName": "d2wt-helper",
+	"description": "DotA2 地图编辑器助手",
+	"version": "0.0.1",
+	"publisher": "tanruixin",
+	"engines": {
+		"vscode": "^1.44.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:key-value",
+		"onCustomEditor:d2wt-helper.kv-editor"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "key-value",
+				"aliases": [
+					"KV"
+				],
+				"extensions": [
+					".kv",
+					".txt"
+				],
+				"configuration": "./language-configuration.json"
+			}
+		],
+		"customEditors": [
+			{
+				"viewType": "d2wt-helper.kv-editor",
+				"displayName": "KV Editor",
+				"selector": [
+					{
+						"filenamePattern": "*.kv"
+					},
+					{
+						"filenamePattern": "*.txt"
+					}
+				]
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -w -p ./"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.44.0",
+		"@types/node": "^13.11.0",
+		"typescript": "^3.8.3"
+	}
+}
