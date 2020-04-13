@@ -1,14 +1,13 @@
 {
 	"compilerOptions": {
-		"module": "commonjs",
-		"target": "es6",
+		"module": "esnext",
+		"target": "esnext",
+		"rootDir": "src",
 		"outDir": "out",
-		"sourceMap": true,
-		"strict": true,
-		"rootDir": "src"
+		"strict": true
 	},
 	"exclude": [
 		"node_modules",
-		".vscode-test"
+		"res"
 	]
 }

@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import path = require('path');
+import * as path from 'path';
 
 export class KVEditorProvider implements vscode.CustomTextEditorProvider {
-	public static register(context: vscode.ExtensionContext): vscode.Disposable { 
+	public static register(context: vscode.ExtensionContext): vscode.Disposable {
 		const provider = new KVEditorProvider(context);
 		const providerRegistration = vscode.window.registerCustomEditorProvider(KVEditorProvider.viewType, provider);
 		return providerRegistration;
@@ -51,7 +51,6 @@ export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 		});
 
 		updateWebview();
-		console.log("更新视图");
 	}
 
 	// 获取html

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { fjsonObj } from '../extension';
 
 export class KVCompletionItemProvider implements vscode.CompletionItemProvider {
-	public static register(context: vscode.ExtensionContext): vscode.Disposable { 
+	public static register(context: vscode.ExtensionContext): vscode.Disposable {
 		const provider = new KVCompletionItemProvider(context);
 		const providerRegistration = vscode.languages.registerCompletionItemProvider(KVCompletionItemProvider.selector, provider, ...KVCompletionItemProvider.triggerCharacters)
 		return providerRegistration;

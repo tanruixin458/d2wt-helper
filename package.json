@@ -2,6 +2,7 @@
 	"name": "d2wt-helper",
 	"displayName": "d2wt-helper",
 	"description": "DotA2 地图编辑器助手",
+	"private": true,
 	"version": "0.0.1",
 	"publisher": "tanruixin",
 	"engines": {
@@ -40,7 +41,8 @@
 					{
 						"filenamePattern": "*.txt"
 					}
-				]
+				],
+				"priority": "option"
 			}
 		]
 	},

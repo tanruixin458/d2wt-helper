@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import path = require('path');
+import * as path from 'path';
 import { KVCompletionItemProvider } from './provider/KVCompletionItemProvider';
 import { KVEditorProvider } from './provider/KVEditorProvider';
 
