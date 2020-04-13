@@ -24,11 +24,9 @@ export function activate(context: vscode.ExtensionContext) {
 	
 	// 注册KV自动补全功能
 	context.subscriptions.push(KVCompletionItemProvider.register(context));
-	console.log("KV自动补全功能被激活");
 
 	// 注册KV可视化编辑器功能
 	context.subscriptions.push(KVEditorProvider.register(context));
-	console.log("KV可视化编辑器功能被激活");
 }
 
 // 插件被停用

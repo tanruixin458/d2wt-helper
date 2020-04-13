@@ -6,9 +6,6 @@ let STATE_VALUE = 4;
 let STATE_VALUE_END = 5;
 let STATE_VALUE_LIST = 6;
 
-// @ts-ignore
-let vscode = acquireVsCodeApi();
-
 function inArray(value, array) {
 	let i = array.length;
 	while (i--) {

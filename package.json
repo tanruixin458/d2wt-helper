@@ -9,6 +9,7 @@
 		"vscode": "^1.44.0"
 	},
 	"categories": [
+		"Snippets",
 		"Other"
 	],
 	"activationEvents": [
@@ -43,6 +44,12 @@
 					}
 				],
 				"priority": "option"
+			}
+		],
+		"snippets": [
+			{
+				"language": "key-value",
+				"path": "./snippets/kv-new.json"
 			}
 		]
 	},

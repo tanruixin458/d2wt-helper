@@ -3,8 +3,9 @@ import * as path from 'path';
 
 export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
-		const provider = new KVEditorProvider(context);
-		const providerRegistration = vscode.window.registerCustomEditorProvider(KVEditorProvider.viewType, provider);
+		let provider = new KVEditorProvider(context);
+		let providerRegistration = vscode.window.registerCustomEditorProvider(KVEditorProvider.viewType, provider);
+		console.log("KV可视化编辑器功能被激活");
 		return providerRegistration;
 	}
 
@@ -56,10 +57,10 @@ export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 	// 获取html
 	private getHtmlForWebview(webview: vscode.Webview): string {
 		let extensionPath = this.context.extensionPath;
-		let scriptUri1 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "KVEditor.js")));
-		let scriptUri2 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "KVUtils.js")));
-		let scriptUri3 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "KV.js")));
-		let styleUri = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "KVEditor.css")));
+		let scriptUri1 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "js", "KVEditor.js")));
+		let scriptUri2 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "js", "KVUtils.js")));
+		let scriptUri3 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "js", "KV.js")));
+		let styleUri = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "css", "KVEditor.css")));
 
 		let nonce = this.getNonce();
 
@@ -84,7 +85,7 @@ export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 	// 获取随机码
 	private getNonce() {
 		let text = "";
-		const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		for (let i = 0; i < 32; i++) {
 			text += possible.charAt(Math.floor(Math.random() * possible.length));
 		}

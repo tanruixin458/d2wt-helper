@@ -1,0 +1,41 @@
+{
+	"new a ability kv": {
+		"prefix": "nak",
+		"body": [
+			"\"example\"",
+			"{",
+			"\t\"BaseClass\"\t\t\t\t\t\t\"\"// 基类",
+			"\t\"AbilityTextureName\"\t\t\t\t\t\t\"\"// 技能图标",
+			"\t\"ScriptFile\"\t\t\t\t\t\t\"\"// 脚本文件",
+			"\t\"AbilityType\"\t\t\t\t\t\t\"\"// 技能类型",
+			"\t\"AbilityBehavior\"\t\t\t\t\t\t\"\"// 技能行为",
+			"\t\"AbilityUnitTargetTeam\"\t\t\t\t\t\t\"\"// 目标队伍",
+			"\t\"AbilityUnitTargetType\"\t\t\t\t\t\t\"\"// 目标类型",
+			"\t\"AbilityUnitTargetFlags\"\t\t\t\t\t\t\"\"// 目标标记",
+			"\t\"SpellImmunityType\"\t\t\t\t\t\t\"\"// 技能免疫类型",
+			"\t\"SpellDispellableType\"\t\t\t\t\t\t\"\"// 技能可驱散类型",
+			"\t\"AbilityUnitDamageType\"\t\t\t\t\t\t\"\"// 技能伤害类型",
+			"\t\"FightRecapLevel\"\t\t\t\t\t\t\"\"// 战斗回放等级",
+			"\t\"HotKeyOverride\"\t\t\t\t\t\t\"\"// 热键",
+			"\t\"MaxLevel\"\t\t\t\t\t\t\"\"// 最大等级",
+			"\t\"RequiredLevel\"\t\t\t\t\t\t\"\"// 需求等级",
+			"\t\"LevelsBetweenUpgrades\"\t\t\t\t\t\t\"\"// 升级间隔",
+			"\t\"AbilityCastPoint\"\t\t\t\t\t\t\"\"// 施法前摇",
+			"\t\"AbilityCastAnimation\"\t\t\t\t\t\t\"\"// 施法动作",
+			"\t\"AnimationPlaybackRate\"\t\t\t\t\t\t\"\"// 动画播放速率",
+			"\t\"AbilityCooldown\"\t\t\t\t\t\t\"\"// 冷却时间",
+			"\t\"AbilityManaCost\"\t\t\t\t\t\t\"\"// 魔法消耗",
+			"\t\"AbilityCastRange\"\t\t\t\t\t\t\"\"// 施法距离",
+			"\t\"AbilityCastRangeBuffer\"\t\t\t\t\t\t\"\"// 施法距离缓冲",
+			"\t\"AbilityChannelTime\"\t\t\t\t\t\t\"\"// 持续施法时间(持续技能才有)",
+			"\t\"AOERadius\"\t\t\t\t\t\t\"\"// AOE范围(目标范围技能才有)",
+			"\t\"HasScepterUpgrade\"\t\t\t\t\t\t\"\"// 是否拥有A杖效果",
+			"",
+			"\t\"AbilitySpecial\"",
+			"\t{",
+			"\t}",
+			"}"
+		],
+		"description": "新建一段完整的技能KV"
+	}
+}

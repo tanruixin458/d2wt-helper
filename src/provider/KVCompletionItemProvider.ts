@@ -3,8 +3,9 @@ import { fjsonObj } from '../extension';
 
 export class KVCompletionItemProvider implements vscode.CompletionItemProvider {
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
-		const provider = new KVCompletionItemProvider(context);
-		const providerRegistration = vscode.languages.registerCompletionItemProvider(KVCompletionItemProvider.selector, provider, ...KVCompletionItemProvider.triggerCharacters)
+		let provider = new KVCompletionItemProvider(context);
+		let providerRegistration = vscode.languages.registerCompletionItemProvider(KVCompletionItemProvider.selector, provider, ...KVCompletionItemProvider.triggerCharacters)
+		console.log("KV自动补全功能被激活");
 		return providerRegistration;
 	}
 
