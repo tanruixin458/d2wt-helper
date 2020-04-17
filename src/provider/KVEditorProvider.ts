@@ -8,10 +8,10 @@ export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 		let providerRegistration = vscode.window.registerCustomEditorProvider(KVEditorProvider.viewType, provider);
 		console.log("KV可视化编辑器功能被激活");
 
-		// 预载入所需文件
-		let htmlFileRelativePath = "res/web/html/main.html";
-		fu.readExtensionFile(context, htmlFileRelativePath).then(function(fileContent) {
-			let resourcePath = path.join(context.extensionPath, htmlFileRelativePath);
+		// 预载入所需资源
+		let fileRelativePath = "res/web/html/main.html";
+		fu.readExtensionFile(context, fileRelativePath).then(function(fileContent) {
+			let resourcePath = path.join(context.extensionPath, fileRelativePath);
 			let dirPath = path.dirname(resourcePath);
 			KVEditorProvider.mainHTMLText = fileContent.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")((?!http).+?)"/g, (m, $1, $2) => {
 				return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';

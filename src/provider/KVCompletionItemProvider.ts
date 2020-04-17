@@ -1,13 +1,22 @@
 import * as vscode from 'vscode';
-import { fjsonObj } from '../extension';
+import * as fu from  '../utils/FileUtils';
 
 export class KVCompletionItemProvider implements vscode.CompletionItemProvider {
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
 		let provider = new KVCompletionItemProvider(context);
 		let providerRegistration = vscode.languages.registerCompletionItemProvider(KVCompletionItemProvider.selector, provider, ...KVCompletionItemProvider.triggerCharacters)
 		console.log("KV自动补全功能被激活");
+
+		// 预载入所需资源
+		let fileRelativePath = "res/abilityKV.json";
+		fu.readExtensionFile(context, fileRelativePath).then(function(fileContent) {
+			KVCompletionItemProvider.jsonObj = JSON.parse(fileContent);
+		});
+
 		return providerRegistration;
 	}
+
+	private static jsonObj: any = null;
 
 	private static readonly selector = "key-value";
 
@@ -29,18 +38,14 @@ export class KVCompletionItemProvider implements vscode.CompletionItemProvider {
 				let key = array[0].replace(/"/g, "");
 
 				// 读取枚举列表
-				let jsonObj = fjsonObj;
-
 				let result = [];
-				for (let enumType in jsonObj) {
-					if (enumType == key) {
-						let subObj = jsonObj[enumType];
-						for (let enumName in subObj) {
-							let item = new vscode.CompletionItem(enumName, vscode.CompletionItemKind.Enum);
-							item.documentation = subObj[enumName];
-							item.detail = subObj[enumName];
-							result.push(item);
-						}
+				let subObj = KVCompletionItemProvider.jsonObj[key];
+				if (subObj) {
+					for (let enumName in subObj) {
+						let item = new vscode.CompletionItem(enumName, vscode.CompletionItemKind.Enum);
+						item.documentation = subObj[enumName];
+						item.detail = subObj[enumName];
+						result.push(item);
 					}
 				}
 				return result;
