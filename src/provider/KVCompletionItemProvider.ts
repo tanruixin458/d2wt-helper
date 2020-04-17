@@ -2,16 +2,15 @@ import * as vscode from 'vscode';
 import * as fu from  '../utils/FileUtils';
 
 export class KVCompletionItemProvider implements vscode.CompletionItemProvider {
-	public static register(context: vscode.ExtensionContext): vscode.Disposable {
+	public static async register(context: vscode.ExtensionContext): Promise<vscode.Disposable> {
 		let provider = new KVCompletionItemProvider(context);
 		let providerRegistration = vscode.languages.registerCompletionItemProvider(KVCompletionItemProvider.selector, provider, ...KVCompletionItemProvider.triggerCharacters)
 		console.log("KV自动补全功能被激活");
 
 		// 预载入所需资源
 		let fileRelativePath = "res/abilityKV.json";
-		fu.readExtensionFile(context, fileRelativePath).then(function(fileContent) {
-			KVCompletionItemProvider.jsonObj = JSON.parse(fileContent);
-		});
+		let fileContent = await fu.readExtensionFile(context, fileRelativePath);
+		KVCompletionItemProvider.jsonObj = JSON.parse(fileContent);
 
 		return providerRegistration;
 	}

@@ -3,19 +3,18 @@ import * as path from 'path';
 import * as fu from  '../utils/FileUtils';
 
 export class KVEditorProvider implements vscode.CustomTextEditorProvider {
-	public static register(context: vscode.ExtensionContext): vscode.Disposable {
+	public static async register(context: vscode.ExtensionContext): Promise<vscode.Disposable> {
 		let provider = new KVEditorProvider(context);
 		let providerRegistration = vscode.window.registerCustomEditorProvider(KVEditorProvider.viewType, provider);
 		console.log("KV可视化编辑器功能被激活");
 
 		// 预载入所需资源
 		let fileRelativePath = "res/web/html/main.html";
-		fu.readExtensionFile(context, fileRelativePath).then(function(fileContent) {
-			let resourcePath = path.join(context.extensionPath, fileRelativePath);
-			let dirPath = path.dirname(resourcePath);
-			KVEditorProvider.mainHTMLText = fileContent.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")((?!http).+?)"/g, (m, $1, $2) => {
-				return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';
-			});
+		let fileContent = await fu.readExtensionFile(context, fileRelativePath);
+		let resourcePath = path.join(context.extensionPath, fileRelativePath);
+		let dirPath = path.dirname(resourcePath);
+		KVEditorProvider.mainHTMLText = fileContent.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")((?!http).+?)"/g, (m, $1, $2) => {
+			return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';
 		});
 
 		return providerRegistration;

@@ -2,16 +2,12 @@
 // We use this API to post messages back to our extension.
 let vscode = acquireVsCodeApi();
 
-console.log(1);
-
 let app = new Vue({
 	el: '#app',
 	data: {
 		message: 'Hello Vue!'
 	}
 });
-
-console.log(2);
 
 // Script run within the webview itself.
 (function() {
