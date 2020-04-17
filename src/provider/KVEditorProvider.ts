@@ -1,13 +1,27 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as fu from  '../utils/FileUtils';
 
 export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
 		let provider = new KVEditorProvider(context);
 		let providerRegistration = vscode.window.registerCustomEditorProvider(KVEditorProvider.viewType, provider);
 		console.log("KV可视化编辑器功能被激活");
+
+		// 预载入所需文件
+		let htmlFileRelativePath = "res/web/html/main.html";
+		fu.readExtensionFile(context, htmlFileRelativePath).then(function(fileContent) {
+			let resourcePath = path.join(context.extensionPath, htmlFileRelativePath);
+			let dirPath = path.dirname(resourcePath);
+			KVEditorProvider.mainHTMLText = fileContent.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
+				return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';
+			});
+		});
+
 		return providerRegistration;
 	}
+
+	private static mainHTMLText: string = "";
 
 	private static readonly viewType = "d2wt-helper.kv-editor";
 
@@ -20,7 +34,7 @@ export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.webview.options = {
 			enableScripts: true,
 		};
-		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
+		webviewPanel.webview.html = KVEditorProvider.mainHTMLText;
 
 		function updateWebview() {
 			webviewPanel.webview.postMessage({
@@ -52,43 +66,5 @@ export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 		});
 
 		updateWebview();
-	}
-
-	// 获取html
-	private getHtmlForWebview(webview: vscode.Webview): string {
-		let extensionPath = this.context.extensionPath;
-		let scriptUri1 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "js", "KVEditor.js")));
-		let scriptUri2 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "js", "KVUtils.js")));
-		let scriptUri3 = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "js", "KV.js")));
-		let styleUri = webview.asWebviewUri(vscode.Uri.file(path.join(extensionPath, "res", "web", "css", "KVEditor.css")));
-
-		let nonce = this.getNonce();
-
-		return `<!DOCTYPE html>
-				<html>
-				<head>
-					<meta charset="UTF-8">
-					<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource}; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
-					<meta name="viewport" content="width=device-width, initial-scale=1.0">
-					<link href="${styleUri}" rel="stylesheet" />
-					<title>KV Editor</title>
-				</head>
-				<body>
-					<div id="error"></div>
-					<script nonce="${nonce}" src="${scriptUri1}"></script>
-					<script nonce="${nonce}" src="${scriptUri2}"></script>
-					<script nonce="${nonce}" src="${scriptUri3}"></script>
-					</body>
-				</html>`;
-	}
-
-	// 获取随机码
-	private getNonce() {
-		let text = "";
-		let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-		for (let i = 0; i < 32; i++) {
-			text += possible.charAt(Math.floor(Math.random() * possible.length));
-		}
-		return text;
 	}
 }

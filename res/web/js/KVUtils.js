@@ -18,6 +18,7 @@ function inArray(value, array) {
 
 function kvRead(text, startLoc) {
 	if(!text) {
+		console.log("kv字符串为空");
 		throw "kv字符串为空";
 	}
 
@@ -68,10 +69,7 @@ function kvRead(text, startLoc) {
 				_endLoc = _i;
 				_breakFor = true;
 			} else {
-				vscode.postMessage({
-					type: "log",
-					log: "[STATE_NORMAL] Not match:'" + _c + "', index:" + _i
-				});
+				console.log("[STATE_NORMAL] Not match:'" + _c + "', index:" + _i);
 			}
 			break;
 
@@ -110,10 +108,7 @@ function kvRead(text, startLoc) {
 				_value = [];
 				_setState(STATE_VALUE_LIST);
 			} else {
-				vscode.postMessage({
-					type: "log",
-					log: "[STATE_KEY_END] Not match:'" + _c + "', index:" + _i
-				});
+				console.log("[STATE_KEY_END] Not match:'" + _c + "', index:" + _i);
 			}
 			break;
 

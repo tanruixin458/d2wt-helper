@@ -2,16 +2,17 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<meta http-equiv="Content-Security-Policy"
-			content="default-src 'none'; img-src ${webview.cspSource}; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="${styleUri}" rel="stylesheet" />
+		<link href="../css/KVEditor.css" rel="stylesheet" />
 		<title>KV Editor</title>
 	</head>
 	<body>
-	<div id="error"></div>
-		<script nonce="${nonce}" src="${scriptUri1}"></script>
-		<script nonce="${nonce}" src="${scriptUri2}"></script>
-		<script nonce="${nonce}" src="${scriptUri3}"></script>
+		<div id="app">
+			{{ message }}
+		</div>
+		<script src="../js/lib/vue.js"></script>
+		<script src="../js/KV.js"></script>
+		<script src="../js/KVEditor.js"></script>
+		<script src="../js/KVUtils.js"></script>
 	</body>
 </html>

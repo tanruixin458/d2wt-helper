@@ -1,23 +1,27 @@
+// Get a reference to the VS Code webview api.
+// We use this API to post messages back to our extension.
 let vscode = acquireVsCodeApi();
+
+console.log(1);
+
+let app = new Vue({
+	el: '#app',
+	data: {
+		message: 'Hello Vue!'
+	}
+});
+
+console.log(2);
 
 // Script run within the webview itself.
 (function() {
-	// Get a reference to the VS Code webview api.
-	// We use this API to post messages back to our extension.
-
 	function updateContent(text) {
 		let kv;
 		try {
 			kv = kvRead(text, 0);
 		} catch(error) {
-			let e = document.getElementById("error");
-			e.innerHTML = error;
 			return;
 		}
-		vscode.postMessage({
-			type: "log",
-			log: kv
-		});
 	}
 
 	// Handle messages sent from the extension to the webview
