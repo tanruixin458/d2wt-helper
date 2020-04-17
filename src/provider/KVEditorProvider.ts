@@ -13,7 +13,7 @@ export class KVEditorProvider implements vscode.CustomTextEditorProvider {
 		fu.readExtensionFile(context, htmlFileRelativePath).then(function(fileContent) {
 			let resourcePath = path.join(context.extensionPath, htmlFileRelativePath);
 			let dirPath = path.dirname(resourcePath);
-			KVEditorProvider.mainHTMLText = fileContent.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")(.+?)"/g, (m, $1, $2) => {
+			KVEditorProvider.mainHTMLText = fileContent.replace(/(<link.+?href="|<script.+?src="|<img.+?src=")((?!http).+?)"/g, (m, $1, $2) => {
 				return $1 + vscode.Uri.file(path.resolve(dirPath, $2)).with({ scheme: 'vscode-resource' }).toString() + '"';
 			});
 		});
